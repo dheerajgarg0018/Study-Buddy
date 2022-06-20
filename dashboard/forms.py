@@ -33,11 +33,19 @@ class WikiForm(forms.Form):
     text = forms.CharField(max_length=100, label="", widget=forms.TextInput(attrs={'style': 'width:40%'}))
 
 class ConversionForm(forms.Form):
-    CHOICES = [('length', 'Length'), ('mass', 'Mass')]
+    CHOICES = [('temperature', 'Temperature'), ('length', 'Length'), ('mass', 'Mass')]
     measurement = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
 
+class ConversionTempForm(forms.Form):
+    CHOICES = [('celsius', 'Celsius'), ('fahrenheit', 'Fahrenheit'), ('kelvin', 'Kelvin')]
+    input = forms.CharField(required=False, label=False, widget=forms.TextInput(
+        attrs={'type': 'number', 'placeholder': 'Enter the Number'}
+    ))
+    measure1 = forms.CharField(label='', widget=forms.Select(choices=CHOICES))
+    measure2 = forms.CharField(label='', widget=forms.Select(choices=CHOICES))
+
 class ConversionLengthForm(forms.Form):
-    CHOICES = [('yard', 'Yard'), ('foot', 'Foot')]
+    CHOICES = [('yard', 'Yard'), ('foot', 'Foot'), ('meter', 'Meter')]
     input = forms.CharField(required=False, label=False, widget=forms.TextInput(
         attrs={'type': 'number', 'placeholder': 'Enter the Number'}
     ))

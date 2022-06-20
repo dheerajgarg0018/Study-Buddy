@@ -362,6 +362,39 @@ def wiki(request):
 def conversion(request):
     if request.method == "POST":
         form = ConversionForm(request.POST)
+        
+        if request.POST['measurement'] == 'temperature':
+            measurement_form = ConversionTempForm()
+            context = {
+                'form': form,
+                'm_form': measurement_form,
+                'input': True
+            }
+            if 'input' in request.POST:
+                first = request.POST['measure1']
+                second = request.POST['measure2']
+                input = request.POST['input']
+                answer = ''
+                if input and int(input) >= 0:
+                    if first=='celsius' and second=='fahrenheit':
+                        answer= f'{input} \u00B0C = {int(input)*1.8 + 32} \u00B0F'
+                    if first=='fahrenheit' and second=='celsius':
+                        answer= f'{input} \u00B0F = {(int(input)-32)*5/9} \u00B0C' 
+                    if first=='kelvin' and second=='fahrenheit':
+                        answer= f'{input} K = {(int(input)-273.15)*1.8 + 32} \u00B0F'
+                    if first=='fahrenheit' and second=='kelvin':
+                        answer= f'{input} \u00B0F = {(int(input)-32)*5/9 + 273.15} K'
+                    if first=='kelvin' and second=='celsius':
+                        answer= f'{input} K = {int(input)-273.15} \u00B0C'
+                    if first=='celsius' and second=='kelvin':
+                        answer= f'{input} \u00B0C = {int(input) + 273.15} K'
+                context = {
+                    'form': form,
+                    'm_form': measurement_form,
+                    'input': True,
+                    'answer': answer
+                }
+        
         if request.POST['measurement'] == 'length':
             measurement_form = ConversionLengthForm()
             context = {
@@ -378,7 +411,15 @@ def conversion(request):
                     if first=='yard' and second=='foot':
                         answer= f'{input} yard = {int(input)*3} foot'
                     if first=='foot' and second=='yard':
-                        answer= f'{input} foot = {int(input)/3} yard'  
+                        answer= f'{input} foot = {int(input)/3} yard'
+                    if first=='meter' and second=='foot':
+                        answer= f'{input} meter = {int(input)*3.28084} foot'
+                    if first=='foot' and second=='meter':
+                        answer= f'{input} foot = {int(input)*0.3048} meter'  
+                    if first=='meter' and second=='yard':
+                        answer= f'{input} meter = {int(input)*1.09361} yard'
+                    if first=='yard' and second=='meter':
+                        answer= f'{input} yard = {int(input)*0.9144} meter'
                 context = {
                     'form': form,
                     'm_form': measurement_form,
