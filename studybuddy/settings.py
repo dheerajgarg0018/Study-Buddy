@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-mgk9i#3b_)w+if3$&!1t!1$qopj1iuv-$bnx$%)(+hqhi=@ycz
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','sampledomain.com']
+ALLOWED_HOSTS = ['studybuddy-djangoapp.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
